@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -18,15 +21,44 @@ public class MainActivity extends AppCompatActivity {
 
     public boolean checkOperators(String numbers)
     {
-
-        if((numbers.charAt(numbers.length() - 1) != '+') ||
-                (numbers.charAt(numbers.length() - 1) != '-') ||
-                (numbers.charAt(numbers.length() - 1) != '*') ||
-                (numbers.charAt(numbers.length() - 1) != '/'))
+        if((numbers.charAt(numbers.length() - 1) == '+') ||
+                (numbers.charAt(numbers.length() - 1) == '-') ||
+                (numbers.charAt(numbers.length() - 1) == '*') ||
+                (numbers.charAt(numbers.length() - 1) == '/'))
         {
+            Log.i("lol", "HLEO");
             return true;
         }
+        Log.i("lol", "HKRIEJGRE");
         return false;
+    }
+
+    public String solve(String numbers)
+    {
+        int numCalcs = 0;
+        List<String> equationList = new ArrayList<>();
+        String temp = "";
+        for(int i = 0; i < numbers.length(); i++)
+        {
+            if((numbers.charAt(i) == '+') ||
+                    (numbers.charAt(i) == '-') ||
+                    (numbers.charAt(i) == '*') ||
+                    (numbers.charAt(i) == '/'))
+            {
+                numCalcs++;
+            }
+            if(numCalcs > 1)
+            {
+                equationList.add(temp);// no, actually try and combine the numbers
+            }
+            temp += numbers.charAt(i);
+        }
+
+        for(int i = numCalcs; numCalcs > 0; numCalcs--)
+        {
+
+        }
+        return Integer.toString(numCalcs);
     }
 
 
@@ -78,22 +110,42 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         else if (id == R.id.minusButton) {
-            if(main.getText() != "")
+            if(!main.getText().toString().isEmpty())
             {
-                main.setText(main.getText().toString() + "-");
+                if(checkOperators(main.getText().toString()) == false)
+                {
+                    main.setText(main.getText().toString() + "-");
+                }
             }
         }
         else if (id == R.id.multiplyButton) {
-            if(main.getText() != "")
+            if(!main.getText().toString().isEmpty())
             {
-                main.setText(main.getText().toString() + "*");
+                if(checkOperators(main.getText().toString()) == false)
+                {
+                    main.setText(main.getText().toString() + "*");
+                }
             }
         }
         else if (id == R.id.divideButton) {
-            if(main.getText() != "")
+            if(!main.getText().toString().isEmpty())
             {
-                main.setText(main.getText().toString() + "/");
+                if(checkOperators(main.getText().toString()) == false)
+                {
+                    main.setText(main.getText().toString() + "/");
+                }
             }
         }
+        else if (id == R.id.deleteButton) {
+            if(!main.getText().toString().isEmpty())
+            {
+                String text = main.getText().toString().substring(0, main.getText().length() - 1);
+                main.setText(text);
+            }
+        }
+        else if (id == R.id.equalsButton) {
+            Log.i("lol", solve(main.getText().toString()));
+        }
+
     }
 }

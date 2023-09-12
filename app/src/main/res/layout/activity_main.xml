@@ -324,6 +324,7 @@
                 android:text="del"
                 android:textSize="19sp"
                 app:cornerRadius="20dp"
+                android:onClick="buttonClick"
                 tools:layout_editor_absoluteX="35dp"
                 tools:layout_editor_absoluteY="37dp" />
 
@@ -339,6 +340,7 @@
                 android:text="="
                 android:textSize="24sp"
                 app:cornerRadius="20dp"
+                android:onClick="buttonClick"
                 tools:layout_editor_absoluteX="35dp"
                 tools:layout_editor_absoluteY="37dp" />
 
