@@ -33,81 +33,79 @@ public class MainActivity extends AppCompatActivity {
 
     public String solve(String numbers)
     {
-        if(numbers.length() % 2 > 0 && numbers.length() > 1) {
-            int numCalcs = 0;
-            List<String> equationList = new ArrayList<>();
-            List<Character> operatorList = new ArrayList<>();
-            String temp = "";
-            for (int i = 0; i < numbers.length(); i++) {
-                if ((numbers.charAt(i) == '+') ||
-                        (numbers.charAt(i) == '-') ||
-                        (numbers.charAt(i) == '*') ||
-                        (numbers.charAt(i) == '/')) {
-                    numCalcs++;
-                    operatorList.add(numbers.charAt(i));
-                    equationList.add(temp);
-                    temp = "";
-                    i++;
-                }
-                if (i == numbers.length() - 1) {
-                    equationList.add(temp + numbers.charAt(i));
-                } else {
-                    temp += numbers.charAt(i);
-                }
+        int numCalcs = 0;
+        List<String> equationList = new ArrayList<>();
+        List<Character> operatorList = new ArrayList<>();
+        String temp = Character.toString(numbers.charAt(0));
+        for (int i = 1; i < numbers.length(); i++) {
+            if ((numbers.charAt(i) == '+') ||
+                    (numbers.charAt(i) == '-') ||
+                    (numbers.charAt(i) == '*') ||
+                    (numbers.charAt(i) == '/')) {
+                numCalcs++;
+                operatorList.add(numbers.charAt(i));
+                equationList.add(temp);
+                temp = "";
+                i++;
             }
-            double calcNum;
-            for (int i = 0; i < operatorList.size(); ) {
-                if (numbers.indexOf("*") > 0 ||
-                        numbers.indexOf("/") > 0) {
+            if (i == numbers.length() - 1) {
+                equationList.add(temp + numbers.charAt(i));
+            } else {
+                temp += numbers.charAt(i);
+            }
+        }
+        double calcNum;
+        for (int i = 0; i < operatorList.size(); ) {
+            if (numbers.indexOf("*") > 0 ||
+                    numbers.indexOf("/") > 0) {
 
-                    for (int j = 0; j < operatorList.size(); ) {
-                        if (operatorList.get(j) == '*') {
-                            calcNum = Double.parseDouble(equationList.get(j)) * Double.parseDouble(equationList.get(j + 1));
+                for (int j = 0; j < operatorList.size(); ) {
+                    if (operatorList.get(j) == '*') {
+                        calcNum = Double.parseDouble(equationList.get(j)) * Double.parseDouble(equationList.get(j + 1));
+                        equationList.set(j, Double.toString(calcNum));
+                        equationList.remove(j + 1);
+                        operatorList.remove(j);
+                        j = 0;
+                    } else if (operatorList.get(j) == '/') {
+                        if(!equationList.get(j).equals("0") && !equationList.get(j + 1).equals("0"))
+                        {
+                            calcNum = Double.parseDouble(equationList.get(j)) / Double.parseDouble(equationList.get(j + 1));
                             equationList.set(j, Double.toString(calcNum));
                             equationList.remove(j + 1);
                             operatorList.remove(j);
                             j = 0;
-                        } else if (operatorList.get(j) == '/') {
-                            if(!equationList.get(j).equals("0") && !equationList.get(j + 1).equals("0"))
-                            {
-                                calcNum = Double.parseDouble(equationList.get(j)) / Double.parseDouble(equationList.get(j + 1));
-                                equationList.set(j, Double.toString(calcNum));
-                                equationList.remove(j + 1);
-                                operatorList.remove(j);
-                                j = 0;
-                            }
-                            else
-                            {
-                                return "0";
-                            }
-                        } else {
-                            j++;
                         }
+                        else
+                        {
+                            return "0";
+                        }
+                    } else {
+                        j++;
                     }
                 }
+            }
 
-                if (operatorList.size() > 0) {
-                    if (operatorList.get(i) == '+') {
-                        calcNum = Double.parseDouble(equationList.get(i)) + Double.parseDouble(equationList.get(i + 1));
-                        equationList.set(i, Double.toString(calcNum));
-                        equationList.remove(i + 1);
-                        operatorList.remove(i);
-                    } else if (operatorList.get(i) == '-') {
-                        calcNum = Double.parseDouble(equationList.get(i)) - Double.parseDouble(equationList.get(i + 1));
-                        equationList.set(i, Double.toString(calcNum));
-                        equationList.remove(i + 1);
-                        operatorList.remove(i);
-                    }
+            if (operatorList.size() > 0) {
+                if (operatorList.get(i) == '+') {
+                    calcNum = Double.parseDouble(equationList.get(i)) + Double.parseDouble(equationList.get(i + 1));
+                    equationList.set(i, Double.toString(calcNum));
+                    equationList.remove(i + 1);
+                    operatorList.remove(i);
+                } else if (operatorList.get(i) == '-') {
+                    calcNum = Double.parseDouble(equationList.get(i)) - Double.parseDouble(equationList.get(i + 1));
+                    equationList.set(i, Double.toString(calcNum));
+                    equationList.remove(i + 1);
+                    operatorList.remove(i);
                 }
-
-
-                i = 0;
             }
 
 
-            return equationList.get(0);
+            i = 0;
         }
-        return "";
+
+
+        return equationList.get(0);
+
     }
 
 
@@ -124,10 +122,10 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         else if (id == R.id.oneButton) {
-            main.setText(main.getText().toString() + "1");;
+                main.setText(main.getText().toString() + "1");;
         }
         else if (id == R.id.twoButton) {
-            main.setText(main.getText().toString() + "2");;
+                main.setText(main.getText().toString() + "2");;
         }
         else if (id == R.id.threeButton) {
             main.setText(main.getText().toString() + "3");
@@ -139,7 +137,6 @@ public class MainActivity extends AppCompatActivity {
             main.setText(main.getText().toString() + "5");
         }
         else if (id == R.id.sixButton) {
-            Log.i("lol", Integer.toString(R.id.sixButton));
             main.setText(main.getText().toString() + "6");
         }
         else if (id == R.id.sevenButton) {
@@ -195,9 +192,11 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         else if (id == R.id.equalsButton) {
-            if(checkOperators(main.getText().toString()) == false)
-            {
-                main.setText(solve(main.getText().toString()));
+            if(!main.getText().toString().isEmpty()) {
+                if(checkOperators(main.getText().toString()) == false)
+                {
+                    main.setText(solve(main.getText().toString()));
+                }
             }
         }
     }
